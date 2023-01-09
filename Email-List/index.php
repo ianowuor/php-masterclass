@@ -27,6 +27,12 @@ class User {
         VALUES ('$this->email', '$this->firstName', '$this->lastName')";
         return $sql;
     }
+
+    function sendWelcomeEmail () {
+        $sender = "From:owuorian95@gmail.com";
+        $message = "Hello " . strtoupper($this->firstName) . ",\n" . "We are glad you signed up to our email list. Good content coming your way soon.";
+        mail($this->email, "Thank You for signing up to our email list", $message, $sender);
+    }
 }
 
 function checkInput() {
@@ -45,7 +51,7 @@ function checkInput() {
         <title>Sign Up to our Email List</title>
     </head>
     <body>
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" id="form">
             <label for='firstName'>First Name: </label>
             <input type="text" name="firstName" id="firstName"><br>
             <label for="lastName">Last Name: </label>
@@ -69,8 +75,14 @@ function checkInput() {
                 setTimeout(function () {
                     messageBox.style.display = 'none';
                 }, 5000);
+
+                document.getElementById('form').reset();
             
             </script>";
+
+            // Send Welcome Email to User
+            $user->sendWelcomeEmail();
+
             } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
             }        

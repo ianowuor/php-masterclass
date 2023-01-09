@@ -1,3 +1,12 @@
+<?php
+    if ($_POST['list']) {
+        echo $_POST['list'];
+    } else if ($_POST['individual']) {
+        echo $_POST['individual'];
+    } else {
+    echo "Superglobal not found";
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
